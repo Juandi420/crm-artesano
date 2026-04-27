@@ -1,5 +1,5 @@
 const express = require('express');
-const sqlite3 = require('sqlite3').verbose();
+const Database = require('better-sqlite3');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const cors = require('cors');
@@ -15,14 +15,9 @@ app.use(express.json());
 app.use(express.static('public'));
 
 // Base de datos SQLite
-const db = new sqlite3.Database('./crm_artesano.db', (err) => {
-  if (err) {
-    console.error('Error al conectar con la base de datos:', err);
-  } else {
-    console.log('Conectado a la base de datos SQLite');
-    initDatabase();
-  }
-});
+const db = new Database('./crm_artesano.db');
+console.log('Conectado a la base de datos SQLite');
+initDatabase();
 
 // Inicializar tablas
 function initDatabase() {
